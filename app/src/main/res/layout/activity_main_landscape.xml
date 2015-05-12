@@ -5,12 +5,20 @@
     android:id="@+id/rel_main">
 
     <fragment
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_weight="3"
         android:layout_height="match_parent"
         android:id="@+id/portrait_frag"
         android:layout_alignParentLeft="true"
         class="com.example.oem.oweme.PortraitMenuFragment"/>
 
-
+    <fragment
+        android:layout_width="450dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:id="@+id/info_frag"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/portrait_frag"
+        class="com.example.oem.oweme.LandscapeMenuFragment"/>
 
 </RelativeLayout>

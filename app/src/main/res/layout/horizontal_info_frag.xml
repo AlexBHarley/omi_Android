@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Landscape but main"
+        android:text="Landscape info"
         android:id="@+id/textView1"
         android:layout_gravity="center_horizontal"
-        android:background="@android:color/holo_orange_dark"/>
+        android:background="@android:color/holo_blue_bright"/>
 </LinearLayout>

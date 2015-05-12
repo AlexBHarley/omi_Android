@@ -15,15 +15,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
 
-        //Makes fragment manager, introduces a transaction and commits the change
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        PortraitMenuFragment portraitMenuFragment = new PortraitMenuFragment();
-        ft.add(R.id.rel_main, portraitMenuFragment);
-        ft.commit();
+        int screenOrientation = getResources().getConfiguration().orientation;
+
+        if(screenOrientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_main);
+        } else {
+            setContentView(R.layout.activity_main_landscape);
+        }
 
     }
 
