@@ -2,13 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_light">
+    android:background="@android:color/holo_green_light"
+    android:weightSum="4">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Portrait fragment"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:background="@android:color/holo_green_light"/>
+        android:text="Click me for entry pop up"
+        android:background="@color/accent_material_light"
+        android:onClick="makeEntryBox"/>
+
+    <RelativeLayout
+        android:id="@+id/detailscontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"/>
 </LinearLayout>

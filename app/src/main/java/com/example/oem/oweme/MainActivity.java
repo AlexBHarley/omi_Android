@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -50,4 +51,23 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //The pop up box that you add name and $ amount to
+    public void makeEntryBox(View v){
+
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+        entryBoxFragment entryBoxFragment = new entryBoxFragment();
+
+        fragmentTransaction.add(R.id.detailscontainer, entryBoxFragment);
+        fragmentTransaction.commit();
+
+
+    }
+
+
+
+
 }
