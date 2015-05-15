@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -67,6 +68,14 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void addPerson(View v){
+        personInfoElement toBeAdded = new personInfoElement();
+
+        TextView money = (TextView) findViewById(R.id.moneyamount);
+        TextView name = (TextView) findViewById(R.id.name);
+
+
+    }
 
 
 
