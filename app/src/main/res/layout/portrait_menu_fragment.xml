@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="Click me for entry pop up"
         android:background="@color/accent_material_light"
-        android:onClick="makeInfoEntryBox"/>
+        android:onClick="makeInfoEntryBox"
+        />
 
 
 

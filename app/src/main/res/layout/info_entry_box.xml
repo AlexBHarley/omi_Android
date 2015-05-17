@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/nameField"
         android:layout_centerHorizontal="true"
@@ -25,11 +24,6 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="Press me to add new person"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/addPersonInfo"/>
 
 
 </RelativeLayout>

@@ -1,13 +1,13 @@
 package com.example.oem.oweme;
 
+import android.app.AlertDialog;
+
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,38 +57,66 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //The pop up box that you add name and $ amount to
+        //The pop up box that you add name and $ amount to
     public void makeInfoEntryBox(View v){
-        Context context = this;
-        Dialog infoEntryBox = new Dialog(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog
+        // layout
+        final View view = inflater.inflate(R.layout.info_entry_box, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Enter details");
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
-        infoEntryBox.setContentView(R.layout.info_entry_box);
-        infoEntryBox.setTitle("New person details");
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        Button addPersonInfo = (Button) findViewById(R.id.addPersonInfo);
+                        //Fix up this function to return personInfoElement
+                        //Then pass that to addToListView()
+
+                        createNewListEntry(dialog, view);
+
+                        //addToListView();
+
+
+                    }
+                });
+        dialog.show();
+
 
     }
-    //ToDo this may change when i figure out how to get rid of button when items are in the list
-    public View addPerson(View v){
-        personInfoElement toBeAdded = new personInfoElement();
 
-        TextView money = (TextView) findViewById(R.id.moneyamount);
-        TextView name = (TextView) findViewById(R.id.name);
+    public void createNewListEntry(AlertDialog dialog, View view){
 
-        EditText moneyField= (EditText) findViewById(R.id.moneyField);
-        EditText nameField = (EditText) findViewById(R.id.nameField);
 
-        money.setText(
-                moneyField.getText().toString()
+
+        personInfoElement info = new personInfoElement();
+
+        //infoEntryBox details
+        EditText name =  (EditText)view.findViewById(R.id.nameField);
+        EditText money = (EditText) view.findViewById(R.id.moneyField);
+
+        //Need to set new list entry details to EditText values above^^^
+
+        TextView newName = (TextView) info.findViewById(R.id.name);
+        TextView newMoneyAmount = (TextView) info.findViewById(R.id.moneyamount);
+
+        newMoneyAmount.setText(
+                money.getText().toString()
         );
-        name.setText(
-                nameField.getText().toString()
+        newName.setText(
+                newName.getText().toString()
         );
-
-        return v;
-
     }
-
-
 
 }

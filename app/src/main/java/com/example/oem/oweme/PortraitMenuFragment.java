@@ -20,10 +20,7 @@ public class PortraitMenuFragment extends Fragment{
         View mainMenu = inflater.inflate(R.layout.portrait_menu_fragment, container, false);
         return mainMenu;
 
-        ArrayAdapter<View> adapter;
 
-
-        adapter = new ArrayAdapter<View>(this, R.layout.person_info_element, )
     };
 
 
