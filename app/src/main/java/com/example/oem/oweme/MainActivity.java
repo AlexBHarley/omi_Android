@@ -1,14 +1,18 @@
 package com.example.oem.oweme;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -54,26 +58,34 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //The pop up box that you add name and $ amount to
-    public void makeEntryBox(View v){
+    public void makeInfoEntryBox(View v){
+        Context context = this;
+        Dialog infoEntryBox = new Dialog(context);
 
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        infoEntryBox.setContentView(R.layout.info_entry_box);
+        infoEntryBox.setTitle("New person details");
 
-
-        entryBoxFragment entryBoxFragment = new entryBoxFragment();
-
-        fragmentTransaction.add(R.id.detailscontainer, entryBoxFragment);
-        fragmentTransaction.commit();
-
+        Button addPersonInfo = (Button) findViewById(R.id.addPersonInfo);
 
     }
-
-    public void addPerson(View v){
+    //ToDo this may change when i figure out how to get rid of button when items are in the list
+    public View addPerson(View v){
         personInfoElement toBeAdded = new personInfoElement();
 
         TextView money = (TextView) findViewById(R.id.moneyamount);
         TextView name = (TextView) findViewById(R.id.name);
 
+        EditText moneyField= (EditText) findViewById(R.id.moneyField);
+        EditText nameField = (EditText) findViewById(R.id.nameField);
+
+        money.setText(
+                moneyField.getText().toString()
+        );
+        name.setText(
+                nameField.getText().toString()
+        );
+
+        return v;
 
     }
 

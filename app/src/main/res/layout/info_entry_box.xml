@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/ripple_material_light"
+    android:id="@+id/entryBoxFragment"
+    android:layout_weight="1"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/nameField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="123dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/moneyField"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Press me to add new person"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/addPersonInfo"/>
+
+
+</RelativeLayout>

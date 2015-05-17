@@ -3,21 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_green_light"
-    android:weightSum="4">
+    android:weightSum="4"
+    android:id="@+id/detailscontainer">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click me for entry pop up"
         android:background="@color/accent_material_light"
-        android:onClick="makeEntryBox"/>
+        android:onClick="makeInfoEntryBox"/>
 
-    <RelativeLayout
-        android:id="@+id/detailscontainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"/>
+
 
     <ListView
         android:layout_width="match_parent"
@@ -25,5 +21,5 @@
         android:id="@+id/peopleListView">
 
 
-        </ListView>
+    </ListView>
 </LinearLayout>
