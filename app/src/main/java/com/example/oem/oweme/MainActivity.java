@@ -11,12 +11,24 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    ArrayList<String> listItems=new ArrayList<String>();
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<String> adapter;
+
+    //RECORDING HOW MANY TIMES THE BUTTON HAS BEEN CLICKED
+    int clickCounter=0;
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +43,25 @@ public class MainActivity extends ActionBarActivity {
         } else {
             setContentView(R.layout.activity_main_landscape);
         }
+        adapter=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listItems);
+        listItems.setAdapter(adapter);
+    }
 
+
+
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setContentView(R.layout.main);
+
+    }
+
+    //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
+    public void addItems(View v) {
+        listItems.add("Clicked : "+clickCounter++);
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -61,10 +91,8 @@ public class MainActivity extends ActionBarActivity {
     public void makeInfoEntryBox(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
-        LayoutInflater inflater = getLayoutInflater();
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog
-        // layout
+        final LayoutInflater inflater = getLayoutInflater();
+
         final View view = inflater.inflate(R.layout.info_entry_box, null);
         builder.setView(view);
         AlertDialog dialog = builder.create();
@@ -81,26 +109,23 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //Fix up this function to return personInfoElement
-                        //Then pass that to addToListView()
+                        //Creates new personInfoElement to add to listview
+                        personInfoElement info = new personInfoElement();
+                        View listElement = inflater.inflate(R.layout.person_info_element, null);
 
-                        createNewListEntry(dialog, view);
+                        //Adds info from prompt to list entry. Hopefully
+                        info.createNewListEntry(listElement,dialog, view, info);
 
-                        //addToListView();
-
-
+                        addToListView(info);
                     }
                 });
         dialog.show();
 
 
     }
-
-    public void createNewListEntry(AlertDialog dialog, View view){
-
-
-
-        personInfoElement info = new personInfoElement();
+    /*
+    public personInfoElement createNewListEntry(View listElement, DialogInterface dialog,
+                                                View view, personInfoElement info){
 
         //infoEntryBox details
         EditText name =  (EditText)view.findViewById(R.id.nameField);
@@ -108,15 +133,36 @@ public class MainActivity extends ActionBarActivity {
 
         //Need to set new list entry details to EditText values above^^^
 
-        TextView newName = (TextView) info.findViewById(R.id.name);
-        TextView newMoneyAmount = (TextView) info.findViewById(R.id.moneyamount);
+        TextView newName = (TextView)listElement.findViewById(R.id.name);
+        TextView newMoneyAmount = (TextView) listElement.findViewById(R.id.moneyamount);
 
-        newMoneyAmount.setText(
-                money.getText().toString()
-        );
-        newName.setText(
-                newName.getText().toString()
-        );
+
+
+        info.giveValues(name, newName, money, newMoneyAmount);
+
+        return info;
     }
+    */
 
+    public void addToListView(personInfoElement infoElement){
+
+        ArrayList<String> listItems=new ArrayList<String>();
+
+        //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+        ArrayAdapter<String> adapter;
+
+        //RECORDING HOW MANY TIMES THE BUTTON HAS BEEN CLICKED
+        int clickCounter=0;
+
+        adapter=new ArrayAdapter<String>(this,
+                R.layout.person_info_element,
+                    listItems);
+            setListAdapter(adapter);
+
+
+        //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
+        public void addItems(View v) {
+            listItems.add("Clicked : "+clickCounter++);
+            adapter.notifyDataSetChanged();
+        }
 }
