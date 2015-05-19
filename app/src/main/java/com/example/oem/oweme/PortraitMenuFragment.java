@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  The main list view fragment of the app. Takes up the whole screen when app is viewed in portrait mode
@@ -18,9 +21,11 @@ public class PortraitMenuFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View mainMenu = inflater.inflate(R.layout.portrait_menu_fragment, container, false);
+
+
+
+
         return mainMenu;
-
-
     };
 
 
