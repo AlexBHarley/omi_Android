@@ -6,25 +6,29 @@ import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
-    public ArrayList<Item> arrayList;
+    public ArrayList<Contact> arrayList;
+    private DebtDatabase db;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setContentView(R.layout.activity_main);
+        /*
         int screenOrientation = getResources().getConfiguration().orientation;
 
         if(screenOrientation == Configuration.ORIENTATION_PORTRAIT){
@@ -32,11 +36,19 @@ public class MainActivity extends ActionBarActivity {
         } else {
             setContentView(R.layout.activity_main_landscape);
         }
-        arrayList = new ArrayList<Item>();
+        */
+        db = new DebtDatabase(this);
+        List<Contact> contacts = db.getAllContacts();
 
+        for (Contact cn : contacts) {
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getName() + " ,Amount: " + cn.getAmount();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
 
-
-
+            listView = (ListView) findViewById(R.id.listView);
+        }
+        ListViewAdapter adapter = new ListViewAdapter(this, db.getAllContacts());
+        listView.setAdapter(adapter);
     }
 
 
@@ -52,61 +64,45 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            //noinspection SimplifiableIfStatement
+            case R.id.addContact:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                // Get the layout inflater
+                final LayoutInflater inflater = getLayoutInflater();
+
+                final View view = inflater.inflate(R.layout.info_entry_box, null);
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                dialog.setTitle("Enter details");
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        });
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                EditText name_edit_text = (EditText) view.findViewById(R.id.nameField);
+                                EditText money = (EditText) view.findViewById(R.id.moneyField);
+                                String name = name_edit_text.getText().toString();
+                                Integer amount = Integer.parseInt(money.getText().toString());
+
+                                db.insertContact(name, amount);
+                            }
+                        });
+                dialog.show();
+            case R.id.action_settings:
+                return true;
+
+
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-        //The pop up box that you add name and $ amount to
-    public void makeInfoEntryBox(View v) {
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Get the layout inflater
-        final LayoutInflater inflater = getLayoutInflater();
-
-        final View view = inflater.inflate(R.layout.info_entry_box, null);
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-        dialog.setTitle("Enter details");
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                });
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                        EditText name = (EditText) view.findViewById(R.id.nameField);
-                        EditText money = (EditText) view.findViewById(R.id.moneyField);
-                        String nameString = name.getText().toString();
-                        String moneyString = money.getText().toString();
-                        MyAdapter myAdapter = new MyAdapter(getBaseContext(), arrayList);
-                        ListView listview = (ListView) findViewById(R.id.plistView);
-
-                        Item info = new Item(nameString, moneyString);
-                        arrayList.add(info);
-                        listview.setAdapter(myAdapter);
-                        myAdapter.notifyDataSetChanged();
-
-                        //generateData();
-
-                        //addItemToList(nameString, moneyString);
-                        //adapter.notifyDataSetChanged();
-
-                    }
-                });
-        dialog.show();
+        return true;
     }
 
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,12 +12,12 @@ import java.util.ArrayList;
 /**
  * Created by alex on 19/05/15.
  */
-public class MyAdapter extends ArrayAdapter<Item>{
+public class ListViewAdapter extends ArrayAdapter<Contact>{
     private final Context context;
-    private final ArrayList<Item> itemsArrayList;
+    private final ArrayList<Contact> itemsArrayList;
     private static LayoutInflater inflater = null;
 
-    public MyAdapter(Context context, ArrayList<Item> itemsArrayList){
+    public ListViewAdapter(Context context, ArrayList<Contact> itemsArrayList){
         super(context, R.layout.row, itemsArrayList);
 
         this.context = context;
@@ -29,9 +28,6 @@ public class MyAdapter extends ArrayAdapter<Item>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        //Create inflater
-        //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //Get rowView from inflater
         View rowView = inflater.inflate(R.layout.row, parent, false);

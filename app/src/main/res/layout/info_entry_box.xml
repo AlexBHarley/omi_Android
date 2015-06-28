@@ -9,15 +9,13 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name: "/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:id="@+id/nameField"
+            android:hint="Name"
              />
     </LinearLayout>
 
@@ -25,15 +23,13 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount:"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:id="@+id/moneyField"
+            android:hint="Amount"
              />
     </LinearLayout>
 </LinearLayout>

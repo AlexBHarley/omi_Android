@@ -4,14 +4,10 @@
     android:layout_height="match_parent"
     android:id="@+id/rel_main">
 
-    <fragment
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/portrait_frag"
-        android:layout_alignParentLeft="true"
-        class="com.example.oem.oweme.PortraitMenuFragment"
-        />
-
-
+        android:id="@+id/listView">
+    </ListView>
 
 </RelativeLayout>
