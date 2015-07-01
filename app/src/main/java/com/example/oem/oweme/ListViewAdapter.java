@@ -14,14 +14,14 @@ import java.util.ArrayList;
  */
 public class ListViewAdapter extends ArrayAdapter<Contact>{
     private final Context context;
-    private final ArrayList<Contact> itemsArrayList;
+    private final ArrayList<Contact> contactList;
     private static LayoutInflater inflater = null;
 
-    public ListViewAdapter(Context context, ArrayList<Contact> itemsArrayList){
-        super(context, R.layout.row, itemsArrayList);
+    public ListViewAdapter(Context context, ArrayList<Contact> contactList){
+        super(context, R.layout.row, contactList);
 
         this.context = context;
-        this.itemsArrayList = itemsArrayList;
+        this.contactList = contactList;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -37,8 +37,8 @@ public class ListViewAdapter extends ArrayAdapter<Contact>{
         TextView moneyamount = (TextView) rowView.findViewById(R.id.moneyamount);
 
         //Set text for values
-        name.setText(itemsArrayList.get(position).getName());
-        moneyamount.setText(itemsArrayList.get(position).getAmount());
+        name.setText(contactList.get(position).getName());
+        moneyamount.setText(contactList.get(position).getAmount());
 
         return rowView;
     }

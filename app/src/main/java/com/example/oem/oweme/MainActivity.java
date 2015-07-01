@@ -3,7 +3,9 @@ package com.example.oem.oweme;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,17 +39,15 @@ public class MainActivity extends ActionBarActivity {
             setContentView(R.layout.activity_main_landscape);
         }
         */
-        db = new DebtDatabase(this);
-        List<Contact> contacts = db.getAllContacts();
 
-        for (Contact cn : contacts) {
-            String log = "Id: " + cn.getId() + " ,Name: " + cn.getName() + " ,Amount: " + cn.getAmount();
-            // Writing Contacts to log
-            Log.d("Name: ", log);
 
-            listView = (ListView) findViewById(R.id.listView);
-        }
-        ListViewAdapter adapter = new ListViewAdapter(this, db.getAllContacts());
+        Intent i = getIntent();
+
+        arrayList = i.getParcelableArrayListExtra("contact_list");
+
+
+        listView = (ListView) findViewById(R.id.listView);
+        ListViewAdapter adapter = new ListViewAdapter(this, arrayList);
         listView.setAdapter(adapter);
     }
 

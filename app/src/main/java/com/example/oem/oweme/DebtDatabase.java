@@ -25,8 +25,8 @@ public class DebtDatabase extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + CONTACTS_TABLE +
                 "(" + CONTACTS_COLUMN_ID + " INTEGER PRIMARY KEY" +
-                ", " + CONTACTS_COLUMN_NAME + (" TEXT," +
-                " " + CONTACTS_COLUMN_AMOUNT + " INTEGER)"));
+                ", " + CONTACTS_COLUMN_NAME + " TEXT," +
+                " " + CONTACTS_COLUMN_AMOUNT + " INTEGER)");
     }
 
     @Override
@@ -34,13 +34,13 @@ public class DebtDatabase extends SQLiteOpenHelper{
 
     }
 
-    public boolean insertContact(String name, Integer amount){
+    public void insertContact(String name, Integer amount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CONTACTS_COLUMN_NAME, name);
         cv.put(CONTACTS_COLUMN_AMOUNT, amount);
         db.insert(CONTACTS_TABLE, null, cv);
-        return true;
+        db.close();
     }
 
     public ArrayList<Contact> getAllContacts(){
@@ -56,8 +56,11 @@ public class DebtDatabase extends SQLiteOpenHelper{
                 contact.setId(Integer.parseInt(c.getString(0)));
                 contact.setName(c.getString(1));
                 contact.setAmount(Integer.parseInt(c.getString(2)));
-            } while(c.moveToLast());
+                contactArrayList.add(contact);
+            } while(c.moveToNext());
         }
+        c.close();
+        sqLiteDatabase.close();
         return contactArrayList;
     }
 }
