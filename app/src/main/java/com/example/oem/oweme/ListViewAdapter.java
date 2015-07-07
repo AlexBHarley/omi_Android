@@ -8,38 +8,45 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alex on 19/05/15.
  */
 public class ListViewAdapter extends ArrayAdapter<Contact>{
-    private final Context context;
-    private final ArrayList<Contact> contactList;
-    private static LayoutInflater inflater = null;
 
-    public ListViewAdapter(Context context, ArrayList<Contact> contactList){
-        super(context, R.layout.row, contactList);
+    public ListViewAdapter(Context context, int resourceID){
+        super(context, resourceID);
 
-        this.context = context;
-        this.contactList = contactList;
-
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+    public ListViewAdapter(Context context, int resource, List<Contact> items) {
+        super(context, resource, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //Get rowView from inflater
-        View rowView = inflater.inflate(R.layout.row, parent, false);
+        View view = convertView;
 
+        if(view == null){
+            LayoutInflater inflater;
+            inflater = LayoutInflater.from(getContext());
+            view = inflater.inflate(R.layout.row, null);
+        }
+
+        Contact contact = getItem(position);
         //Get text for row
-        TextView name = (TextView) rowView.findViewById(R.id.name);
-        TextView moneyamount = (TextView) rowView.findViewById(R.id.moneyamount);
+        if(contact != null) {
+            TextView name = (TextView) view.findViewById(R.id.name);
+            TextView moneyamount = (TextView) view.findViewById(R.id.moneyamount);
 
-        //Set text for values
-        name.setText(contactList.get(position).getName());
-        moneyamount.setText(contactList.get(position).getAmount());
-
-        return rowView;
+            if(name != null){
+                name.setText(contact.getName());
+            }
+            if(moneyamount != null) {
+                moneyamount.setText(Integer.toString(contact.getAmount()));
+            }
+        }
+        return view;
     }
 }

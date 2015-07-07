@@ -1,5 +1,6 @@
 package com.example.oem.oweme;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
@@ -20,16 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity{
     public ArrayList<Contact> arrayList;
     private DebtDatabase db;
     private ListView listView;
+    ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-        setContentView(R.layout.activity_main);
         /*
         int screenOrientation = getResources().getConfiguration().orientation;
 
@@ -40,21 +42,29 @@ public class MainActivity extends ActionBarActivity {
         }
         */
 
+        db = new DebtDatabase(this);
 
-        Intent i = getIntent();
+        db.insertContact(new Contact(1, "Ben", 10));
+        db.insertContact(new Contact(2, "John", 20));
+        db.insertContact(new Contact(3, "Ann", 30));
 
-        arrayList = i.getParcelableArrayListExtra("contact_list");
+        List<Contact> contactList = db.getAllContacts();
+        for (Contact ti : contactList) {
+            String log = "Id: " + ti.getId() + " , Body: " + ti.getName() +
+                    " , Priority: " + ti.getAmount();
+            Log.d("Name: ", log);
+        }
+
 
 
         listView = (ListView) findViewById(R.id.listView);
-        ListViewAdapter adapter = new ListViewAdapter(this, arrayList);
+        ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, contactList);
         listView.setAdapter(adapter);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+// Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -93,7 +103,8 @@ public class MainActivity extends ActionBarActivity {
                                 String name = name_edit_text.getText().toString();
                                 Integer amount = Integer.parseInt(money.getText().toString());
 
-                                db.insertContact(name, amount);
+                                //db.insertContact(name, amount);
+                                //adapter.notifyDataSetChanged();
                             }
                         });
                 dialog.show();
@@ -104,5 +115,6 @@ public class MainActivity extends ActionBarActivity {
         }
         return true;
     }
+
 
 }

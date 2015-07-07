@@ -6,16 +6,16 @@ import android.os.Parcelable;
 /**
  * Created by alex on 19/05/15.
  */
-public class Contact implements Parcelable{
-    private Integer id;
+public class Contact{
+    private int id;
     private String name;
-    private Integer amount;
+    private int amount;
 
     public Contact(){
 
     }
 
-    public Contact(Integer ID, String name, Integer amount){
+    public Contact(int ID, String name, int amount){
         super();
         this.id = ID;
         this.name = name;
@@ -30,15 +30,15 @@ public class Contact implements Parcelable{
         this.name = name;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public void setId(Integer id){
+    public void setId(int id){
         this.id = id;
     }
 
@@ -46,22 +46,4 @@ public class Contact implements Parcelable{
         return this.id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(name);
-        parcel.writeInt(amount);
-    }
-
-    //Only used by ParcelCreator
-    public Contact(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        amount = in.readInt();
-    }
 }
