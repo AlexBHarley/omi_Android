@@ -1,13 +1,13 @@
 package com.example.oem.oweme;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +44,15 @@ public class ListViewAdapter extends ArrayAdapter<Contact>{
                 name.setText(contact.getName());
             }
             if(moneyamount != null) {
-                moneyamount.setText(Integer.toString(contact.getAmount()));
+
+                if(contact.getAmount() > 0) {
+                    moneyamount.setText("$" + Integer.toString(contact.getAmount()));
+                    moneyamount.setTextColor(Color.GREEN);
+                } else {
+                    moneyamount.setText("$" + Integer.toString(Math.abs(contact.getAmount())));
+
+                    moneyamount.setTextColor(Color.RED);
+                }
             }
         }
         return view;

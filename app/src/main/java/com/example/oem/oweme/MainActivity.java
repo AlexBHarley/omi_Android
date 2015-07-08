@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity{
+public class MainActivity extends ActionBarActivity{
     public ArrayList<Contact> arrayList;
     private DebtDatabase db;
     private ListView listView;
@@ -44,9 +44,16 @@ public class MainActivity extends Activity{
 
         db = new DebtDatabase(this);
 
-        db.insertContact(new Contact(1, "Ben", 10));
-        db.insertContact(new Contact(2, "John", 20));
-        db.insertContact(new Contact(3, "Ann", 30));
+        db.insertContact(new Contact(1, "Ben", -10));
+        db.insertContact(new Contact(2, "John", 12));
+        db.insertContact(new Contact(3, "Susie", -5));
+        db.insertContact(new Contact(3, "Martin", 13));
+        db.insertContact(new Contact(3, "Joe", 9));
+        db.insertContact(new Contact(3, "Jeffrey", -2));
+        db.insertContact(new Contact(3, "Ann", 1));
+        db.insertContact(new Contact(3, "Fred", 8));
+
+
 
         List<Contact> contactList = db.getAllContacts();
         for (Contact ti : contactList) {

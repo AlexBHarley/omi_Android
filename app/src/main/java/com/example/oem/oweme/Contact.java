@@ -1,8 +1,5 @@
 package com.example.oem.oweme;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by alex on 19/05/15.
  */
