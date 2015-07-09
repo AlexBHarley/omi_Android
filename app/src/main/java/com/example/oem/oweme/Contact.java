@@ -25,6 +25,13 @@ public class Contact{
         this.amount_list = amount.toString();
     }
 
+    public Contact(int Id, String name, Integer amount, String amount_list){
+        this.id = Id;
+        this.name = name;
+        this.amount = amount;
+        this.amount_list = amount_list;
+    }
+
     public String getName() {
         return this.name;
     }

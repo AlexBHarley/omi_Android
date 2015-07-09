@@ -129,7 +129,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT)
+        Contact c = db.getContact(Integer.parseInt(Long.toString(id)));
+        Toast.makeText(this, c.getAmount(), Toast.LENGTH_SHORT)
         .show();
     }
 }

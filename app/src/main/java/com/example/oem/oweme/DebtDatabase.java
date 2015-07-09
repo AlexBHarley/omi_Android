@@ -74,4 +74,14 @@ public class DebtDatabase extends SQLiteOpenHelper{
 
         return contactArrayList;
     }
+
+    public Contact getContact(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from " +CONTACTS_TABLE + " where id="+id+"", null );
+        res.moveToFirst();
+        Contact contact = new Contact(Integer.parseInt(res.getString(0)),
+                res.getString(1), Integer.parseInt(res.getString(2)), res.getString(3));
+        // return contact
+        return contact;
+    }
 }
