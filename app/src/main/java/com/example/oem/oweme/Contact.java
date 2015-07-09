@@ -1,22 +1,28 @@
 package com.example.oem.oweme;
 
+import java.util.ArrayList;
+
 /**
  * Created by alex on 19/05/15.
  */
 public class Contact{
     private int id;
     private String name;
-    private int amount;
+    private Integer amount;
+    private String amount_list;
 
     public Contact(){
-
-    }
-
-    public Contact(int ID, String name, int amount){
-        super();
-        this.id = ID;
+        this.id = id;
         this.name = name;
         this.amount = amount;
+        this.amount_list = "";
+    }
+
+    public Contact(int Id, String name, Integer amount){
+        this.id = Id;
+        this.name = name;
+        this.amount = amount;
+        this.amount_list = amount.toString();
     }
 
     public String getName() {
@@ -27,12 +33,21 @@ public class Contact{
         this.name = name;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return this.amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
+        if(amount_list.length() > 0) {
+            amount_list.concat("," + amount.toString());
+        } else {
+            amount_list.concat(amount.toString());
+        }
+    }
+
+    public String getAmount_list(){
+        return this.amount_list;
     }
 
     public void setId(int id){

@@ -14,14 +14,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity{
+public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     public ArrayList<Contact> arrayList;
     private DebtDatabase db;
     private ListView listView;
@@ -44,14 +46,10 @@ public class MainActivity extends ActionBarActivity{
 
         db = new DebtDatabase(this);
 
-        db.insertContact(new Contact(1, "Ben", -10));
-        db.insertContact(new Contact(2, "John", 12));
-        db.insertContact(new Contact(3, "Susie", -5));
-        db.insertContact(new Contact(3, "Martin", 13));
-        db.insertContact(new Contact(3, "Joe", 9));
-        db.insertContact(new Contact(3, "Jeffrey", -2));
-        db.insertContact(new Contact(3, "Ann", 1));
-        db.insertContact(new Contact(3, "Fred", 8));
+        Contact newContact = new Contact(1, "Anreeeeeeeee", 50);
+        Contact newContact1 = new Contact(2, "wwwww", 100);
+        db.insertContact(newContact);
+        db.insertContact(newContact1);
 
 
 
@@ -65,6 +63,7 @@ public class MainActivity extends ActionBarActivity{
 
 
         listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(this);
         ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, contactList);
         listView.setAdapter(adapter);
     }
@@ -110,7 +109,11 @@ public class MainActivity extends ActionBarActivity{
                                 String name = name_edit_text.getText().toString();
                                 Integer amount = Integer.parseInt(money.getText().toString());
 
-                                //db.insertContact(name, amount);
+                                Contact contact = new Contact();
+                                contact.setName(name);
+                                contact.setAmount(amount);
+
+                                db.insertContact(contact);
                                 //adapter.notifyDataSetChanged();
                             }
                         });
@@ -124,4 +127,9 @@ public class MainActivity extends ActionBarActivity{
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT)
+        .show();
+    }
 }

@@ -14,10 +14,12 @@ import java.util.List;
  */
 public class DebtDatabase extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "debtdb.db";
-    public static final String CONTACTS_TABLE = "contacts";
+    public static final String CONTACTS_TABLE = "contacts1";
     public static final String CONTACTS_COLUMN_ID = "id";
     public static final String CONTACTS_COLUMN_NAME = "name";
     public static final String CONTACTS_COLUMN_AMOUNT = "amount";
+    public static final String CONTACTS_COLUMN_AMOUNT_LIST = "amount_list";
+
 
     public DebtDatabase(Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -27,7 +29,8 @@ public class DebtDatabase extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE " + CONTACTS_TABLE +
                 "(" + CONTACTS_COLUMN_ID + " INTEGER PRIMARY KEY," +
                  CONTACTS_COLUMN_NAME + " TEXT," +
-                 CONTACTS_COLUMN_AMOUNT + " INTEGER)");
+                 CONTACTS_COLUMN_AMOUNT + " INTEGER," +
+                CONTACTS_COLUMN_AMOUNT_LIST + " TEXT)");
     }
 
     @Override
@@ -45,6 +48,7 @@ public class DebtDatabase extends SQLiteOpenHelper{
         ContentValues cv = new ContentValues();
         cv.put(CONTACTS_COLUMN_NAME, contact.getName());
         cv.put(CONTACTS_COLUMN_AMOUNT, contact.getAmount());
+        cv.put(CONTACTS_COLUMN_AMOUNT_LIST, contact.getAmount_list());
         long rowId = db.insertOrThrow(CONTACTS_TABLE, null, cv);
         db.close();
     }
