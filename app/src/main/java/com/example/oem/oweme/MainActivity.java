@@ -46,8 +46,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         db = new DebtDatabase(this);
 
-        Contact newContact = new Contact(1, "Anreeeeeeeee", 50);
-        Contact newContact1 = new Contact(2, "wwwww", 100);
+        Contact newContact = new Contact("Anreeeeeeeee", 50);
+        Contact newContact1 = new Contact("wwwww", 100);
+        newContact.setAmount(20);
         db.insertContact(newContact);
         db.insertContact(newContact1);
 
@@ -130,7 +131,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Contact c = db.getContact(Integer.parseInt(Long.toString(id)));
-        Toast.makeText(this, c.getAmount(), Toast.LENGTH_SHORT)
+        Toast.makeText(this, c.getAmount_list(), Toast.LENGTH_SHORT)
         .show();
+
+
+    }
+
+    public void editContact(){
+
     }
 }

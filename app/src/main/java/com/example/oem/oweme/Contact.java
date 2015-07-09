@@ -18,15 +18,13 @@ public class Contact{
         this.amount_list = "";
     }
 
-    public Contact(int Id, String name, Integer amount){
-        this.id = Id;
+    public Contact(String name, Integer amount){
         this.name = name;
         this.amount = amount;
         this.amount_list = amount.toString();
     }
 
-    public Contact(int Id, String name, Integer amount, String amount_list){
-        this.id = Id;
+    public Contact(String name, Integer amount, String amount_list){
         this.name = name;
         this.amount = amount;
         this.amount_list = amount_list;
@@ -46,11 +44,7 @@ public class Contact{
 
     public void setAmount(Integer amount) {
         this.amount = amount;
-        if(amount_list.length() > 0) {
-            amount_list.concat("," + amount.toString());
-        } else {
-            amount_list.concat(amount.toString());
-        }
+        this.amount_list = amount_list.concat("," + amount.toString());
     }
 
     public String getAmount_list(){

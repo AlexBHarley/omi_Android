@@ -57,4 +57,9 @@ public class ListViewAdapter extends ArrayAdapter<Contact>{
         }
         return view;
     }
+
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).getId();
+    }
 }

@@ -28,8 +28,8 @@ public class DebtDatabase extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + CONTACTS_TABLE +
                 "(" + CONTACTS_COLUMN_ID + " INTEGER PRIMARY KEY," +
-                 CONTACTS_COLUMN_NAME + " TEXT," +
-                 CONTACTS_COLUMN_AMOUNT + " INTEGER," +
+                CONTACTS_COLUMN_NAME + " TEXT," +
+                CONTACTS_COLUMN_AMOUNT + " INTEGER," +
                 CONTACTS_COLUMN_AMOUNT_LIST + " TEXT)");
     }
 
@@ -77,11 +77,23 @@ public class DebtDatabase extends SQLiteOpenHelper{
 
     public Contact getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from " +CONTACTS_TABLE + " where id="+id+"", null );
-        res.moveToFirst();
-        Contact contact = new Contact(Integer.parseInt(res.getString(0)),
-                res.getString(1), Integer.parseInt(res.getString(2)), res.getString(3));
-        // return contact
-        return contact;
+        Cursor cursor =  db.rawQuery( "select * from " +CONTACTS_TABLE + " where id="+id+"", null );
+
+        if(cursor != null && cursor.moveToFirst()){
+            cursor.moveToFirst();
+            Contact contact = new Contact(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                    cursor.getString(3));
+            cursor.close();
+            return contact;
+
+        }
+        Contact f = new Contact("nuuuuuug", 10);
+        return f;
     }
+    /*
+    public void editContact(int id, int amount){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.update(CONTACTS_TABLE, )
+    }
+    */
 }
