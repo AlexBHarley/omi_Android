@@ -3,9 +3,11 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.github.mikephil.charting.charts.LineChart
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:text="hello"/>
+        android:id="@+id/chart"
+        android:background="#ffffff">
 
+    </com.github.mikephil.charting.charts.LineChart>
 </LinearLayout>

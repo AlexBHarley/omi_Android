@@ -106,8 +106,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
                                 EditText name_edit_text = (EditText) view.findViewById(R.id.nameField);
                                 EditText money = (EditText) view.findViewById(R.id.moneyField);
+                                EditText info_box = (EditText) view.findViewById(R.id.info_box);
+
                                 String name = name_edit_text.getText().toString();
                                 Integer amount = Integer.parseInt(money.getText().toString());
+                                String info = info_box.getText().toString();
 
                                 Contact contact = new Contact();
                                 contact.setName(name);

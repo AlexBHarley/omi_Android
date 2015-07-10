@@ -39,34 +39,7 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
 
         String[] amountList = amounts.split(",");
 
-        ArrayList<Entry> entries = new ArrayList<>();
-        int i = 0;
-        for(String amount : amountList){
-            int amountValue = Integer.parseInt(amount);
-            Entry entry = new Entry(amountValue, i);
-            entries.add(entry);
-            i++;
-        }
 
-        LineDataSet lineDataSet = new LineDataSet(entries, contactName);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(lineDataSet);
-
-        ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("22/4/14"); xVals.add("27/4/15"); xVals.add("25/6/15"); xVals.add("27/6/15");
-        xVals.add("30/7/15");xVals.add("2/8/15");xVals.add("5/8/15");
-
-
-        ArrayList<String> xVals2 = new ArrayList<String>();
-
-        LineData data = new LineData(xVals, dataSets);
-        
-        lineChart.setData(data);
-        lineChart.animateXY(3000, 3000, Easing.EasingOption.EaseInBounce, Easing.EasingOption.EaseInBounce);
-        lineChart.invalidate();
 
 
 
@@ -108,7 +81,7 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
         legend.setEnabled(false);
 
 
-
+/*
 
         ArrayList<Entry> amounts = new ArrayList<Entry>();
         ArrayList<Entry> amounts2 = new ArrayList<Entry>();
@@ -158,6 +131,35 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
         lineChart.setData(data);
         lineChart.animateXY(3000, 3000, Easing.EasingOption.EaseInBounce, Easing.EasingOption.EaseInBounce);
         lineChart.invalidate(); // refresh
+*/
+        ArrayList<Entry> entries = new ArrayList<>();
+        int i = 0;
+        for(String amount : amountList){
+            int amountValue = Integer.parseInt(amount);
+            Entry entry = new Entry(amountValue, i);
+            entries.add(entry);
+            i++;
+        }
+
+        LineDataSet lineDataSet = new LineDataSet(entries, contactName);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(lineDataSet);
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        xVals.add("22/4/14"); xVals.add("27/4/15"); xVals.add("25/6/15"); xVals.add("27/6/15");
+        xVals.add("30/7/15");xVals.add("2/8/15");xVals.add("5/8/15");
+
+
+        ArrayList<String> xVals2 = new ArrayList<String>();
+
+        LineData data = new LineData(xVals, dataSets);
+
+        lineChart.setData(data);
+        lineChart.animateXY(3000, 3000, Easing.EasingOption.EaseInBounce, Easing.EasingOption.EaseInBounce);
+        lineChart.invalidate();
     }
 
     @Override
@@ -193,5 +195,5 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
 
         }
 
-    }
+
 }
