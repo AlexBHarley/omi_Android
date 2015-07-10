@@ -1,6 +1,5 @@
 package com.example.oem.oweme;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
@@ -134,6 +133,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         Toast.makeText(this, c.getAmount_list(), Toast.LENGTH_SHORT)
         .show();
 
+        Intent graphIntent = new Intent(this, GraphActivity.class);
+        graphIntent.putExtra("name", c.getName());
+        graphIntent.putExtra("amountList", c.getAmount_list());
+
+        startActivity(graphIntent);
 
     }
 
