@@ -8,7 +8,7 @@ import android.os.Handler;
 /**
  * Created by alex on 5/07/15.
  */
-public class Splashscreen extends Activity{
+public class Splashscreen extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 3000;
@@ -17,6 +17,8 @@ public class Splashscreen extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        this.getActionBar().hide();
 
         new Handler().postDelayed(new Runnable() {
 
