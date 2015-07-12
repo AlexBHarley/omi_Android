@@ -30,7 +30,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public ArrayList<Contact> arrayList;
     private DebtDatabase db;
     private ListView listView;
-    ListViewAdapter adapter;
     ActionButton actionButton;
 
     @Override
@@ -39,18 +38,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         setContentView(R.layout.main);
 
         db = new DebtDatabase(this);
-        List<Contact> contactList = db.getAllContacts();
-        for (Contact ti : contactList) {
-            String log = "Id: " + ti.getId() + " , Body: " + ti.getName() +
-                    " , Priority: " + ti.getAmount();
-            Log.d("Name: ", log);
-        }
-
-
+        //List<Contact> contactList = db.getAllContacts();
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-        ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, contactList);
+        final ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, db.getAllContacts());
         listView.setAdapter(adapter);
 
         actionButton = (ActionButton) findViewById(R.id.action_button);
@@ -90,6 +82,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                 contact.setAmount(amount);
 
                                 db.insertContact(contact);
+                                
+                                final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                                listView.setAdapter(adapter);
+
                                 //adapter.notifyDataSetChanged();
                             }
                         });

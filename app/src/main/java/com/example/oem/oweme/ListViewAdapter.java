@@ -47,11 +47,11 @@ public class ListViewAdapter extends ArrayAdapter<Contact>{
 
                 if(contact.getAmount() > 0) {
                     moneyamount.setText("$" + Integer.toString(contact.getAmount()));
-                    moneyamount.setTextColor(Color.GREEN);
+                    moneyamount.setTextColor(getContext().getResources().getColor(R.color.positive));
                 } else {
                     moneyamount.setText("$" + Integer.toString(Math.abs(contact.getAmount())));
 
-                    moneyamount.setTextColor(Color.RED);
+                    moneyamount.setTextColor(getContext().getResources().getColor(R.color.neg));
                 }
             }
         }

@@ -43,8 +43,13 @@ public class Contact{
     }
 
     public void setAmount(Integer amount) {
-        this.amount = amount;
-        this.amount_list = amount_list.concat("," + amount.toString());
+        if(this.amount_list == ""){
+            this.amount_list = amount.toString();
+            this.amount = amount;
+        } else {
+            this.amount_list = amount_list.concat("," + amount.toString());
+            this.amount = amount;
+        }
     }
 
     public String getAmount_list(){
