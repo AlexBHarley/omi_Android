@@ -11,6 +11,7 @@
     <item name="colorDivider" type="color">#B6B6B6</item>
     <item name="positive" type="color">#4caf50</item>
     <item name="neg" type="color">#f44336</item>
+    <item name='editcontact' type="color">#00e676</item>
 
 
 

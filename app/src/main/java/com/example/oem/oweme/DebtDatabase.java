@@ -116,5 +116,22 @@ public class DebtDatabase extends SQLiteOpenHelper{
 
     }
 
+    public void editContactFromPosition(int position, int amount, String TheyOwe){
+        String query = "SELECT * FROM " + CONTACTS_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor c = sqLiteDatabase.rawQuery(query, null);
+        int position_count = 0;
+
+        if(c.moveToFirst()){
+            do{
+                if(position_count == position){
+                    editContact(c.getInt(0), amount, TheyOwe);
+                }
+                position_count++;
+            } while(c.moveToNext());
+        }
+        c.close();
+    }
+
 
 }
