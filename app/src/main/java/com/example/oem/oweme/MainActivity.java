@@ -5,22 +5,15 @@ import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Parcelable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -30,10 +23,9 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
     public ArrayList<Contact> arrayList;
     private DebtDatabase db;
     private SwipeMenuListView listView;
@@ -47,11 +39,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         db = new DebtDatabase(this);
 
-        //List<Contact> contactList = db.getAllContacts();
-
         listView = (SwipeMenuListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
 
         final ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, db.getAllContacts());
         listView.setAdapter(adapter);
@@ -149,10 +138,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 final int position_final = position;
                 switch (index) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "Edit position" + Integer.toString(position_final), Toast.LENGTH_SHORT)
-                                .show();
-
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         // Get the layout inflater
                         final LayoutInflater inflater = getLayoutInflater();
@@ -173,8 +158,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                         Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
                                         String desc = description.getText().toString();
 
-                                        db.editContactFromPosition(position_final, amount_to_update, "TheyOweMe");
-                                        //db.editContact(id, amount_to_update, "TheyOweMe");
+                                        db.editContactByPosition(position_final, amount_to_update, "TheyOweMe");
+                                        //db.editContactById(id, amount_to_update, "TheyOweMe");
 
                                         final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
                                         listView.setAdapter(adapter);
@@ -192,9 +177,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
                                         Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
                                         String desc = description.getText().toString();
-                                        db.editContactFromPosition(position_final, amount_to_update, "IOweThem");
+                                        db.editContactByPosition(position_final, amount_to_update, "IOweThem");
 
-                                       // db.editContact(id, amount_to_update, "IOweThem");
+                                       // db.editContactById(id, amount_to_update, "IOweThem");
 
                                         final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
                                         listView.setAdapter(adapter);
@@ -206,6 +191,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                         // delete
                         Toast.makeText(getApplicationContext(), "Delete position" + Integer.toString(position), Toast.LENGTH_SHORT)
                                 .show();
+                        db.deleteContactByPosition(position);
+                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                        listView.setAdapter(adapter);
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -234,12 +222,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         return true;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Contact c = db.getContact(Integer.parseInt(Long.toString(id)));
-        Toast.makeText(this, c.getAmount_list(), Toast.LENGTH_SHORT)
-        .show();
 
         Intent graphIntent = new Intent(this, GraphActivity.class);
         graphIntent.putExtra("name", c.getName());
@@ -248,58 +233,5 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         startActivity(graphIntent);
 
     }
-    //Edit contact
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        // Get the layout inflater
-        final LayoutInflater inflater = getLayoutInflater();
-
-        final View alert_view = inflater.inflate(R.layout.edit_contact, null);
-        builder.setView(alert_view);
-        AlertDialog dialog = builder.create();
-        dialog.setTitle("Edit Contact");
-
-        //Positive
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "They Owe Me",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
-                        EditText description = (EditText) alert_view.findViewById(R.id.description);
-
-                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
-                        String desc = description.getText().toString();
-
-                        db.editContact(id, amount_to_update, "TheyOweMe");
-
-                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
-                        listView.setAdapter(adapter);
-                    }
-                });
-
-        //Negative
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "I Owe Them",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
-                        EditText description = (EditText) alert_view.findViewById(R.id.description);
-
-                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
-                        String desc = description.getText().toString();
-
-                        db.editContact(id, amount_to_update, "IOweThem");
-
-                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
-                        listView.setAdapter(adapter);
-                    }
-                });
-        dialog.show();
-
-        return true;
-    }
-
 }
 

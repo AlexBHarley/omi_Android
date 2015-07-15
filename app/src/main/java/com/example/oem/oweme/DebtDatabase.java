@@ -91,7 +91,7 @@ public class DebtDatabase extends SQLiteOpenHelper{
         return f;
     }
 
-    public void editContact(long id, int amount, String OweOrPay){
+    public void editContactById(long id, int amount, String OweOrPay){
         int newAmount;
         SQLiteDatabase db = this.getWritableDatabase();
         Contact contact = getContact(id);
@@ -116,7 +116,7 @@ public class DebtDatabase extends SQLiteOpenHelper{
 
     }
 
-    public void editContactFromPosition(int position, int amount, String TheyOwe){
+    public void editContactByPosition(int position, int amount, String TheyOwe){
         String query = "SELECT * FROM " + CONTACTS_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor c = sqLiteDatabase.rawQuery(query, null);
@@ -125,7 +125,33 @@ public class DebtDatabase extends SQLiteOpenHelper{
         if(c.moveToFirst()){
             do{
                 if(position_count == position){
-                    editContact(c.getInt(0), amount, TheyOwe);
+                    editContactById(c.getInt(0), amount, TheyOwe);
+                }
+                position_count++;
+            } while(c.moveToNext());
+        }
+        c.close();
+    }
+
+    public void deleteContactById(long id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Contact contactToDelete = getContact(id);
+        //return db.delete(CONTACTS_TABLE, CONTACTS_COLUMN_ID + " = ?",
+         //       new String[] {String.valueOf(contactToDelete.getId()) }) > 0;
+        db.delete(CONTACTS_TABLE, CONTACTS_COLUMN_ID + "='" + id + "'", null);
+    }
+
+    public void deleteContactByPosition(int position){
+        String query = "SELECT * FROM " + CONTACTS_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor c = sqLiteDatabase.rawQuery(query, null);
+        int position_count = 0;
+
+        if(c.moveToFirst()){
+            do{
+                if(position_count == position){
+                    deleteContactById(c.getInt(0));
                 }
                 position_count++;
             } while(c.moveToNext());

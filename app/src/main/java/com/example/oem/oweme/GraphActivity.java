@@ -50,7 +50,6 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
         for(String amount : amountList){
 
             int amountValue = Integer.parseInt(amount);
-            //Toast.makeText(this, amount, Toast.LENGTH_SHORT).show();
             Entry entry = new Entry(amountValue, i);
             entries.add(entry);
 
