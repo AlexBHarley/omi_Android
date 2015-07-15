@@ -44,7 +44,6 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         setUpLineChart(lineChart);
 
-
         ArrayList<Entry> entries = new ArrayList<>();
         ArrayList<String> xVals = new ArrayList<>();
         Integer i = 0;
@@ -56,7 +55,6 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
             entries.add(entry);
 
             xVals.add(i.toString());
-
             i++;
         }
 
@@ -85,7 +83,7 @@ public class GraphActivity extends Activity implements OnChartValueSelectedListe
         YAxis yAxisLeft = lineChart.getAxisLeft();
         YAxis yAxisRight = lineChart.getAxisRight();
 
-        yAxisLeft.setAxisMinValue(-5);
+        //yAxisLeft.setAxisMinValue(-5);
         yAxisRight.setDrawGridLines(false);
         yAxisRight.setDrawAxisLine(false);
         yAxisRight.setDrawLabels(false);

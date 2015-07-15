@@ -75,7 +75,7 @@ public class DebtDatabase extends SQLiteOpenHelper{
         return contactArrayList;
     }
 
-    public Contact getContact(int id) {
+    public Contact getContact(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor =  db.rawQuery( "select * from " +CONTACTS_TABLE + " where id="+id+"", null );
 
@@ -90,10 +90,31 @@ public class DebtDatabase extends SQLiteOpenHelper{
         Contact f = new Contact("nuuuuuug", 10);
         return f;
     }
-    /*
-    public void editContact(int id, int amount){
-        SQLiteDatabase db = this.getReadableDatabase();
-        db.update(CONTACTS_TABLE, )
+
+    public void editContact(long id, int amount, String OweOrPay){
+        int newAmount;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Contact contact = getContact(id);
+        int currentAmount = contact.getAmount();
+
+        switch (OweOrPay){
+            case "TheyOweMe":
+                newAmount = currentAmount + amount;
+                contact.setAmount(newAmount);
+                break;
+            case "IOweThem":
+                newAmount = currentAmount - amount;
+                contact.setAmount(newAmount);
+                break;
+        }
+
+        String id_filter = CONTACTS_COLUMN_ID + "=" + id;
+        ContentValues args = new ContentValues();
+        args.put(CONTACTS_COLUMN_AMOUNT, contact.getAmount());
+        args.put(CONTACTS_COLUMN_AMOUNT_LIST, contact.getAmount_list());
+        db.update(CONTACTS_TABLE, args, id_filter, null);
+
     }
-    */
+
+
 }

@@ -42,6 +42,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
         final ListViewAdapter adapter = new ListViewAdapter(this, R.layout.row, db.getAllContacts());
         listView.setAdapter(adapter);
 
@@ -82,7 +83,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                 contact.setAmount(amount);
 
                                 db.insertContact(contact);
-                                
+
                                 final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
                                 listView.setAdapter(adapter);
 
@@ -130,8 +131,55 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
     //Edit contact
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Contact c = db.getContact(Integer.parseInt(Long.toString(id)));
-        return false;
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
+        Toast.makeText(MainActivity.this, "On ling", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        // Get the layout inflater
+        final LayoutInflater inflater = getLayoutInflater();
+
+        final View alert_view = inflater.inflate(R.layout.edit_contact, null);
+        builder.setView(alert_view);
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Edit Contact");
+
+        //Positive
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "They Owe Me",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
+                        EditText description = (EditText) alert_view.findViewById(R.id.description);
+
+                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
+                        String desc = description.getText().toString();
+
+                        db.editContact(id, amount_to_update, "TheyOweMe");
+
+                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                        listView.setAdapter(adapter);
+                    }
+                });
+
+        //Negative
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "I Owe Them",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
+                        EditText description = (EditText) alert_view.findViewById(R.id.description);
+
+                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
+                        String desc = description.getText().toString();
+
+                        db.editContact(id, amount_to_update, "IOweThem");
+
+                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                        listView.setAdapter(adapter);
+                    }
+                });
+        dialog.show();
+
+        return true;
     }
 }

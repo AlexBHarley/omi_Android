@@ -14,7 +14,8 @@
                 android:listSelector="@drawable/selector"
                 android:background="#ffffff"
                 android:divider="@color/colorSecondaryText"
-                android:dividerHeight="0.3dp">
+                android:dividerHeight="0.3dp"
+                android:longClickable="true">
             </ListView>
     <com.software.shell.fab.ActionButton
         android:id="@+id/action_button"
