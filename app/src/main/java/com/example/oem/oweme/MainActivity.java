@@ -56,12 +56,35 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 final View view = inflater.inflate(R.layout.info_entry_box, null);
                 builder.setView(view);
                 AlertDialog dialog = builder.create();
-                dialog.setTitle("Enter details");
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                dialog.setTitle("Create contact");
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "They Owe Me",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                EditText name_edit_text = (EditText) view.findViewById(R.id.nameField);
+                                EditText money = (EditText) view.findViewById(R.id.moneyField);
+                                //EditText info_box = (EditText) view.findViewById(R.id.info_box);
 
-                                dialog.dismiss();
+                                String name = name_edit_text.getText().toString();
+
+                                if (money.getText().toString().equals("") || money.getText().toString().equals("")) {
+                                    dialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Sorry, please enter a name or amount", Toast.LENGTH_LONG)
+                                            .show();
+                                    dialog.dismiss();
+                                } else {
+                                    Integer amount = Integer.parseInt(money.getText().toString());
+                                    //String info = info_box.getText().toString();
+
+                                    Contact contact = new Contact();
+                                    contact.setName(name);
+                                    contact.setAmount(-amount);
+
+                                    db.insertContact(contact);
+
+                                    final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                                    listView.setAdapter(adapter);
+
+                                }
                             }
                         });
                 dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
@@ -71,22 +94,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
                                 EditText name_edit_text = (EditText) view.findViewById(R.id.nameField);
                                 EditText money = (EditText) view.findViewById(R.id.moneyField);
-                                EditText info_box = (EditText) view.findViewById(R.id.info_box);
+                                //EditText info_box = (EditText) view.findViewById(R.id.info_box);
 
                                 String name = name_edit_text.getText().toString();
-                                Integer amount = Integer.parseInt(money.getText().toString());
-                                String info = info_box.getText().toString();
 
-                                Contact contact = new Contact();
-                                contact.setName(name);
-                                contact.setAmount(amount);
+                                if(money.getText().toString().equals("") || money.getText().toString().equals("")) {
+                                    dialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Sorry, please enter a name or amount", Toast.LENGTH_LONG)
+                                            .show();
+                                    dialog.dismiss();
+                                } else {
+                                    Integer amount = Integer.parseInt(money.getText().toString());
+                                    //String info = info_box.getText().toString();
 
-                                db.insertContact(contact);
+                                    Contact contact = new Contact();
+                                    contact.setName(name);
+                                    contact.setAmount(amount);
 
-                                final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
-                                listView.setAdapter(adapter);
+                                    db.insertContact(contact);
 
-                                //adapter.notifyDataSetChanged();
+                                    final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                                    listView.setAdapter(adapter);
+                                }
                             }
                         });
                 dialog.show();
@@ -153,16 +182,22 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
-                                        EditText description = (EditText) alert_view.findViewById(R.id.description);
+                                        //EditText description = (EditText) alert_view.findViewById(R.id.description);
 
-                                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
-                                        String desc = description.getText().toString();
+                                        if(amount_edit.getText().toString().equals( "")) {
+                                            dialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "Sorry, please enter an amount", Toast.LENGTH_LONG)
+                                                    .show();
+                                        } else {
+                                            Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
+                                            //String desc = description.getText().toString();
 
-                                        db.editContactByPosition(position_final, amount_to_update, "TheyOweMe");
-                                        //db.editContactById(id, amount_to_update, "TheyOweMe");
+                                            db.editContactByPosition(position_final, amount_to_update, "TheyOweMe");
+                                            //db.editContactById(id, amount_to_update, "TheyOweMe");
 
-                                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
-                                        listView.setAdapter(adapter);
+                                            final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                                            listView.setAdapter(adapter);
+                                        }
                                     }
                                 });
 
@@ -173,24 +208,30 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         EditText amount_edit = (EditText) alert_view.findViewById(R.id.edit_amount);
-                                        EditText description = (EditText) alert_view.findViewById(R.id.description);
+                                        //EditText description = (EditText) alert_view.findViewById(R.id.description);
 
-                                        Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
-                                        String desc = description.getText().toString();
-                                        db.editContactByPosition(position_final, amount_to_update, "IOweThem");
+                                        if(amount_edit.getText().toString().equals( "")){
+                                            dialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "Sorry, please enter an amount", Toast.LENGTH_LONG)
+                                                    .show();
+                                            dialog.dismiss();
+                                        } else {
+                                            Integer amount_to_update = Integer.parseInt(amount_edit.getText().toString());
 
-                                       // db.editContactById(id, amount_to_update, "IOweThem");
+                                            //String desc = description.getText().toString();
+                                            db.editContactByPosition(position_final, amount_to_update, "IOweThem");
 
-                                        final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
-                                        listView.setAdapter(adapter);
+                                            // db.editContactById(id, amount_to_update, "IOweThem");
+
+                                            final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                                            listView.setAdapter(adapter);
+                                        }
                                     }
                                 });
                         dialog.show();
                         break;
                     case 1:
                         // delete
-                        Toast.makeText(getApplicationContext(), "Delete position" + Integer.toString(position), Toast.LENGTH_SHORT)
-                                .show();
                         db.deleteContactByPosition(position);
                         final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
                         listView.setAdapter(adapter);
@@ -217,7 +258,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent i = new Intent(MainActivity.this, About.class);
+                startActivity(i);
                 return true;
+            case R.id.cleardebts:
+                db.deleteAll();
+                final ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.row, db.getAllContacts());
+                listView.setAdapter(adapter);
         }
         return true;
     }

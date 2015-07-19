@@ -79,16 +79,14 @@ public class DebtDatabase extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor =  db.rawQuery( "select * from " +CONTACTS_TABLE + " where id="+id+"", null );
 
-        if(cursor != null && cursor.moveToFirst()){
+
             cursor.moveToFirst();
             Contact contact = new Contact(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
                     cursor.getString(3));
             cursor.close();
             return contact;
 
-        }
-        Contact f = new Contact("nuuuuuug", 10);
-        return f;
+
     }
 
     public void editContactById(long id, int amount, String OweOrPay){
@@ -157,6 +155,11 @@ public class DebtDatabase extends SQLiteOpenHelper{
             } while(c.moveToNext());
         }
         c.close();
+    }
+
+    public void deleteAll(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(CONTACTS_TABLE, null, null);
     }
 
 
