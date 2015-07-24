@@ -38,7 +38,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         setContentView(R.layout.main);
 
         db = new DebtDatabase(this);
-
         listView = (SwipeMenuListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -77,7 +76,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
                                     Contact contact = new Contact();
                                     contact.setName(name);
-                                    contact.setAmount(-amount);
+                                    contact.setAmount(amount);
 
                                     db.insertContact(contact);
 
@@ -87,7 +86,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                 }
                             }
                         });
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "I Owe Them",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -109,7 +108,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
                                     Contact contact = new Contact();
                                     contact.setName(name);
-                                    contact.setAmount(amount);
+                                    contact.setAmount(-amount);
 
                                     db.insertContact(contact);
 
